@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+   <div class="sidebar">
+        <h2 class="sidebar-header">Patient Dashboard</h2>
+        <a href="{{ url_for('main.info') }}">Info</a>
+        <a href="{{ url_for('main.appointments') }}">Appointments</a>
+        <a href="{{ url_for('main.logout') }}">Logout</a>
+    </div> 
+    <div class="content">
+        {% block view %}
+        {% endblock %}
+    </div>
+{% endblock %}

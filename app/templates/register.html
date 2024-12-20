@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="login-container">
+      <form method="POST">
+        {{ form.hidden_tag() }}
+        <label>{{ form.email.label }}</label>
+         {{ form.email }}
+         {% if form.email.errors %}
+            <div class="error">
+                {% for error in form.email.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <label>{{ form.password.label }}</label>
+         {{ form.password }}
+        {% if form.password.errors %}
+            <div class="error">
+                {% for error in form.password.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <label>{{ form.confirm_password.label }}</label> 
+        {{ form.confirm_password }}
+        {% if form.confirm_password.errors %}
+            <div class="error">
+                {% for error in form.confirm_password.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <label>{{ form.user_type.label }}</label> 
+        {{ form.user_type }}
+        {% if form.user_type.errors %}
+            <div class="error">
+                {% for error in form.user_type.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <p style="font-family: Poppins; font-size: 14px; color: #666666; margin-bottom: 10px;">You already have an account?
+            <a href="{{ url_for('main.login') }}">Login</a>
+        </p>
+        <button type="submit">Register</button>
+    </form>
+    </div>
+    
+{% endblock %}
