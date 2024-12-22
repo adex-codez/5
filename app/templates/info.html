@@ -1,49 +1,56 @@
 {% extends "patient-dashboard.html" %}
 
 {% block view %}
-    <h1>Patient Information</h1>
+    <h1 style="margin-bottom: 30px">Patient Information</h1>
     
-    <h3>Name</h3>
-    {%if patient.name %} 
-        <p>{{patient.name}}</p>
+    <h3 class="info-header">Name</h3>
+    {% if patient.name %} 
+        <p class="info-para">{{ patient.name }}</p>
+    {% else %}
+        <p class="info-para">No info</p>
     {% endif %}
-    {%else%} <p>No info</p> {% endelse %}
 
-    <h3>Phone</h3>
-    {%if patient.phone %} 
-        <p>{{patient.phone}}</p>
+    <h3 class="info-header">Phone</h3>
+    {% if patient.phone %} 
+        <p class="info-para">{{ patient.phone }}</p>
+    {% else %}
+        <p class="info-para">No info</p>
     {% endif %}
-    {%else%} <p>No info</p> {% endelse %}
 
-    <h3>Address</h3>
-    {%if patient.address %} 
-        <p>{{patient.address}}</p>
+    <h3 class="info-header">Address</h3>
+    {% if patient.address %} 
+        <p class="info-para">{{ patient.address }}</p>
+    {% else %}
+        <p class="info-para">No info</p>
     {% endif %}
-    {%else%} <p>No info</p> {% endelse %}
 
-    <h3>Date of birth</h3>
-    {%if patient.date_of_birth %} 
-        <p>{{patient.date_of_birth}}</p>
+    <h3 class="info-header">Date of birth</h3>
+    {% if patient.date_of_birth %} 
+        <p class="info-para">{{ patient.date_of_birth }}</p>
+    {% else %}
+        <p class="info-para">No info</p>
     {% endif %}
-    {%else%} <p>No info</p> {% endelse %}
 
-    <h3>Blood Group</h3>
-    {%if patient.blood_group %} 
-        <p>{{patient.blood_group}}</p>
+    <h3 class="info-header">Blood Group</h3>
+    {% if patient.blood_group %} 
+        <p class="info-para">{{ patient.blood_group }}</p>
+    {% else %}
+        <p class="info-para">No info</p>
     {% endif %}
-    {%else%} <p>No info</p> {% endelse %}
 
-    <h3>Allergies</h3>
-    {%if patient.medical_history %} 
-        <p>{{patient.medical_history}}</p>
+    <h3 class="info-header">Allergies</h3>
+    {% if patient.allergies %} 
+        <p class="info-para">{{ patient.allergies }}</p>
+    {% else %}
+        <p class="info-para">No info</p>
     {% endif %}
-    {%else%} <p>No info</p> {% endelse %}
 
-    <h3>Medical History</h3>
-    {%if patient.medical_history %} 
-        <p>{{patient.medical_history}}</p>
+    <h3 class="info-header">Medical History</h3>
+    {% if patient.medical_history %} 
+        <p class="info-para mb">{{ patient.medical_history }}</p>
+    {% else %}
+        <p class="info-para mb">No info</p>
     {% endif %}
-    {%else%} <p>No info</p> {% endelse %}
 
-    <button type="submit">Update</button>
+    <a class="update-btn" href="{{url_for('main.update_patient_info')}}">Update</a>
 {% endblock %}

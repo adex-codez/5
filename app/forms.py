@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, SelectField
+from wtforms import StringField, PasswordField, SubmitField, SelectField, DateField
 from wtforms.validators import DataRequired, Email, EqualTo, Length, Regexp
 
 class RegistrationForm(FlaskForm):
@@ -19,7 +19,7 @@ class UpdatePatientInfoForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
     phone = StringField('Phone', validators=[DataRequired()])
     address = StringField('Address', validators=[DataRequired()])
-    date_of_birth = StringField('Date of Birth', validators=[DataRequired()])
+    date_of_birth = DateField('Date of Birth', validators=[DataRequired()])
     blood_group = StringField('Blood Group', validators=[DataRequired()])
     allergies = StringField('Allergies', validators=[DataRequired()])
     medical_history = StringField('Medical History', validators=[DataRequired()])

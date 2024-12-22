@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, session
 from . import db, bcrypt
-from app.models import User, Patient
+from app.models import User, Patient, Doctor
 from app.forms import RegistrationForm, LoginForm, UpdatePatientInfoForm
 
 main = Blueprint('main', __name__)
@@ -36,10 +36,13 @@ def register():
         
         if user.user_type == 'Patient':
             patient = Patient()
+            user.patients.append(patient)
             db.session.add(user)
             db.session.commit()
             return redirect(url_for('main.patient_dashboard'))    
         else:
+            doctor = Doctor()
+            user.doctors.append(doctor)
             db.session.add(user)
             db.session.commit()
             return redirect(url_for('main.doctor_dashboard'))
@@ -82,9 +85,12 @@ def info():
 def update_patient_info():
     if 'user_id' not in session:
         return redirect(url_for('main.login'))
-    form = UpdatePatientInfoForm()
+    patient = Patient.query.filter_by(user_id=session['user_id']).first()
+    if not patient:
+        flash('Patient not found.', 'danger')
+        return redirect(url_for('main.patient_dashboard'))
+    form = UpdatePatientInfoForm(obj=patient)
     if form.validate_on_submit():
-        patient = Patient.query.filter_by(id=session['user_id']).first()
         patient.name = form.name.data
         patient.phone = form.phone.data
         patient.address = form.address.data
@@ -95,4 +101,4 @@ def update_patient_info():
         db.session.commit()
         flash('Information Updated', 'success')
         return redirect(url_for('main.info'))
-    return render_template('info.html', form=form)
+    return render_template('update-patient-info.html', form=form, patient=patient)

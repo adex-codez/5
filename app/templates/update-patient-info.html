@@ -1,0 +1,79 @@
+{% extends "patient-dashboard.html" %}
+
+{% block view %}
+    <form method="POST" class="update-form styled-form">
+        {{ form.hidden_tag() }}
+        
+        <label>{{ form.name.label }}</label>
+        {{ form.name }}
+        {% if form.name.errors %}
+            <div class="error">
+                {% for error in form.name.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        
+        <label>{{ form.phone.label }}</label>
+        {{ form.phone }}
+        {% if form.phone.errors %}
+            <div class="error">
+                {% for error in form.phone.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        
+        <label>{{ form.address.label }}</label>
+        {{ form.address }}
+        {% if form.address.errors %}
+            <div class="error">
+                {% for error in form.address.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        
+        <label>{{ form.date_of_birth.label }}</label>
+        {{ form.date_of_birth(class="calendar-input") }}
+        {% if form.date_of_birth.errors %}
+            <div class="error">
+                {% for error in form.date_of_birth.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        
+        <label>{{ form.blood_group.label }}</label>
+        {{ form.blood_group }}
+        {% if form.blood_group.errors %}
+            <div class="error">
+                {% for error in form.blood_group.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        
+        <label>{{ form.allergies.label }}</label>
+        {{ form.allergies }}
+        {% if form.allergies.errors %}
+            <div class="error">
+                {% for error in form.allergies.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        
+        <label>{{ form.medical_history.label }}</label>
+        {{ form.medical_history }}
+        {% if form.medical_history.errors %}
+            <div class="error">
+                {% for error in form.medical_history.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        
+        <button type="submit">Update</button>
+    </form>
+{% endblock %}
