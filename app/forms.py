@@ -24,3 +24,9 @@ class UpdatePatientInfoForm(FlaskForm):
     allergies = StringField('Allergies', validators=[DataRequired()])
     medical_history = StringField('Medical History', validators=[DataRequired()])
     submit = SubmitField('Update')  
+
+
+class UpdateDoctorInfoForm(FlaskForm):
+    name = StringField('Name', validators=[DataRequired()])
+    phone = StringField('Phone', validators=[DataRequired()])
+    submit = SubmitField('Update')

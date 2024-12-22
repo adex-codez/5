@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, session
 from . import db, bcrypt
 from app.models import User, Patient, Doctor
-from app.forms import RegistrationForm, LoginForm, UpdatePatientInfoForm
+from app.forms import RegistrationForm, LoginForm, UpdatePatientInfoForm,  UpdateDoctorInfoForm
 
 main = Blueprint('main', __name__)
 
@@ -102,3 +102,33 @@ def update_patient_info():
         flash('Information Updated', 'success')
         return redirect(url_for('main.info'))
     return render_template('update-patient-info.html', form=form, patient=patient)
+
+
+@main.route("/doctor/info")
+def doctor_info():
+    if 'user_id' not in session:
+        return redirect(url_for('main.login'))
+    doctor = Doctor.query.filter_by(user_id=session['user_id']).first()
+    print(doctor)
+    return render_template('doctor-info.html', doctor=doctor)
+
+@main.route("/doctor/update-info", methods=['GET', 'POST'])
+def update_doctor_info():
+    if 'user_id' not in session:
+        return redirect(url_for('main.login'))
+    doctor = Doctor.query.filter_by(user_id=session['user_id']).first()
+    if not doctor:
+        flash('Doctor not found.', 'danger')
+        return redirect(url_for('main.doctor_dashboard'))
+    form = UpdateDoctorInfoForm(obj=doctor)
+    if form.validate_on_submit():
+        doctor.name = form.name.data
+        doctor.phone = form.phone.data
+        db.session.commit()
+        flash('Information Updated', 'success')
+        return redirect(url_for('main.doctor_info'))
+    return render_template('update-doctor-info.html', form=form, doctor=doctor)
+
+@main.route("/doctor/appointments")
+def doctor_appointments():
+    return render_template('appointments.html') 

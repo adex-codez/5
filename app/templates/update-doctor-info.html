@@ -1,0 +1,28 @@
+{% extends "doctor-dashboard.html" %}
+
+{% block dash %}
+    <form method="POST" class="update-form styled-form">
+        {{ form.hidden_tag() }}
+        
+        <label>{{ form.name.label }}</label>
+        {{ form.name }}
+        {% if form.name.errors %}
+            <div class="error">
+                {% for error in form.name.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        
+        <label>{{ form.phone.label }}</label>
+        {{ form.phone }}
+        {% if form.phone.errors %}
+            <div class="error">
+                {% for error in form.phone.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <button type="submit">Update</button>
+    </form>
+{% endblock %}

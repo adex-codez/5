@@ -1,0 +1,20 @@
+{% extends "doctor-dashboard.html" %}
+
+{% block dash %}
+    <h1 style="margin-bottom: 30px">Patient Information</h1>
+    
+    <h3 class="info-header">Name</h3>
+    {% if doctor.name %} 
+        <p class="info-para">{{ doctor.name }}</p>
+    {% else %}
+        <p class="info-para">No info</p>
+    {% endif %}
+
+    <h3 class="info-header">Phone</h3>
+    {% if doctor.phone %} 
+        <p class="info-para">{{ doctor.phone }}</p>
+    {% else %}
+        <p class="info-para">No info</p>
+    {% endif %}
+    <a class="update-btn" href="{{url_for('main.update_doctor_info')}}">Update</a>
+{% endblock %}
