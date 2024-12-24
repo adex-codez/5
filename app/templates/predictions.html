@@ -1,0 +1,14 @@
+{% extends "patient-dashboard.html" %}
+
+{% block view %}
+  <h1 style="margin-bottom: 30px">Predictions</h1>
+  <div class="prediction-container">
+    <div class="child-1">Something</div>
+    <div class="child-2">
+      <form method="post" class="prediction-form" enctype="multipart/form-data" action="{{url_for('main.upload_file')}}">
+        <input type="file" name="file" />
+        <button type="submit">Upload</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}

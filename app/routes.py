@@ -2,6 +2,8 @@ from flask import Blueprint, render_template, redirect, url_for, flash, session,
 from . import db, bcrypt
 from app.models import User, Patient, Doctor, Appointment
 from app.forms import RegistrationForm, LoginForm, UpdatePatientInfoForm,  UpdateDoctorInfoForm, SetAppointmentDTForm
+import os
+from app import app
 
 main = Blueprint('main', __name__)
 
@@ -83,7 +85,8 @@ def appointments():
 def info():
     if 'user_id' not in session:
         return redirect(url_for('main.login'))
-    patient = Patient.query.filter_by(id=session['user_id']).first()
+    patient = Patient.query.filter_by(user_id=session['user_id']).first()
+    print(session['user_id'])
     return render_template('info.html', patient=patient)
 
 @main.route("/patient/update-info", methods=['GET', 'POST'])
@@ -167,3 +170,28 @@ def appoint():
         db.session.commit()
         return redirect(url_for('main.appointments'))
     return render_template('set-date-time.html', form=form)
+
+@main.route("/patient/predictions")
+def predictions():
+    if 'user_id' not in session:
+        return redirect(url_for('main.login'))
+    return render_template('predictions.html')
+
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@main.route("/upload-file", methods=['POST'])
+def upload_file():
+    if 'user_id' not in session:
+        return redirect(url_for('main.login'))
+    if 'file' not in request.files:
+        return 'No File part', 400
+    file = request.files['file']
+    if file.filename == '':
+        return 'No selected file', 400
+    if file and allowed_file(file.filename):
+        filepath = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
+        file.save(filepath)
+        return f'File successfully uploaded to {filepath}', 200
+    return 'File type not allowed', 400

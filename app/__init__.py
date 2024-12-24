@@ -2,6 +2,8 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_bcrypt import Bcrypt
+import os
+
 bcrypt = Bcrypt()
 # Initialize the app and database
 app = Flask(__name__)
@@ -11,8 +13,11 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # Disable track modificati
 bcrypt.init_app(app)
 # Initialize the database and migration manager
 db = SQLAlchemy(app)
-migrate = Migrate(app, db)
 
+UPLOAD_FOLDER = 'uploads'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 # Create the initial database (without migrations)
 @app.before_request
