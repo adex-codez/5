@@ -1,0 +1,38 @@
+{% extends "patient-dashboard.html" %}
+
+{% block view %}
+    <form method="POST" class="update-form styled-form">
+        {{ form.hidden_tag() }}
+        
+        <label>{{ form.date.label }}</label>
+        {{ form.date }}
+        {% if form.date.errors %}
+            <div class="error">
+                {% for error in form.date.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        
+        <label>{{ form.time.label }}</label>
+        {{ form.time }}
+        {% if form.time.errors %}
+            <div class="error">
+                {% for error in form.time.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <label>{{ form.description.label }}</label>
+        {{ form.description }}
+        {% if form.description.errors %}
+            <div class="error">
+                {% for error in form.description.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <button type="submit">Set</button>
+    </form>
+{% endblock %}

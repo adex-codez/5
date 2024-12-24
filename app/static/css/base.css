@@ -110,7 +110,6 @@ body {
         }
         .content {
             margin-left: 300px;
-            width: 70%;
             padding: 20px;
         }
 .sidebar-header {
@@ -199,3 +198,107 @@ body {
     border-radius: 5px;
 }
 
+.appointments-container {
+    border-radius: 10px;
+    background-color: white;
+    height: 60vh;
+    width: 100%;
+    margin-top: auto;
+}
+
+.empty {
+   text-align: center; 
+   padding-top: auto;
+}
+
+.add-appointment {
+    background-color: #1e40af;
+    color: white;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 40px;
+    right: 40px;
+    padding: 10px;
+    height: 30px;
+    width: 30px;
+}
+
+/*.add-appointment svg {
+    height: 30px;
+    width: 30px;
+}*/
+
+.add-doctor{
+   border-radius: 10px;
+    background-color: white;
+    height: 60vh;
+    width: 100%;
+    text-decoration: none;
+    padding: 20px 0;
+}
+
+.mb {
+    margin-bottom: 40px;
+}
+
+
+.doctor-list{
+    display: flex;
+    align-items: start;
+}
+
+.doctor-item{
+    display: flex;
+    width: 33.3%;
+    height: 20vh;
+}
+
+
+.image-container {
+    width: 30%;
+}
+
+.image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+
+.sublist {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    justify-content: start;
+}
+
+.appoint-btn {
+    margin-top: 20px;
+    background-color: #1e40af;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.appointment-list{
+    display: flex;
+    align-items: start;
+    padding-top: 30px;
+    flex-wrap: wrap;
+}
+
+.appointment-item{
+    display: flex;
+    width: 33.3%;
+    height: 20vh;
+    gap: 10px;
+    flex-direction: column;
+    margin-bottom: 20px;
+}

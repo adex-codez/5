@@ -1,7 +1,7 @@
-from flask import Blueprint, render_template, redirect, url_for, flash, session
+from flask import Blueprint, render_template, redirect, url_for, flash, session, request
 from . import db, bcrypt
-from app.models import User, Patient, Doctor
-from app.forms import RegistrationForm, LoginForm, UpdatePatientInfoForm,  UpdateDoctorInfoForm
+from app.models import User, Patient, Doctor, Appointment
+from app.forms import RegistrationForm, LoginForm, UpdatePatientInfoForm,  UpdateDoctorInfoForm, SetAppointmentDTForm
 
 main = Blueprint('main', __name__)
 
@@ -72,7 +72,12 @@ def logout():
 
 @main.route("/patient/appointments")
 def appointments():
-    return render_template('appointments.html') 
+    if 'user_id' not in session:
+        return redirect(url_for('main.login'))
+    patient = Patient.query.filter_by(user_id=session['user_id']).first()
+    appointments = Appointment.query.filter_by(patient_id=patient.id).all()
+    print(session['user_id'])
+    return render_template('appointments.html', appointments=appointments)
 
 @main.route("/patient/info")
 def info():
@@ -131,4 +136,34 @@ def update_doctor_info():
 
 @main.route("/doctor/appointments")
 def doctor_appointments():
-    return render_template('appointments.html') 
+    if 'user_id' not in session:
+        return redirect(url_for('main.login'))
+    doctor = Doctor.query.filter_by(user_id=session['user_id']).first()
+    appointments = Appointment.query.filter_by(doctor_id=doctor.id).all()
+    print(appointments)
+    return render_template('doctor-appointment.html', appointments=appointments)  
+
+@main.route("/patient/add-doctor")
+def add_doctor():
+    if 'user_id' not in session:
+        return redirect(url_for('main.login'))
+    
+    doctors = Doctor.query.all()  # Fetch all doctors from the database
+    return render_template('add-doctor.html', doctors=doctors)
+
+@main.route("/patient/appoint", methods=['GET', 'POST'])
+def appoint():
+    if 'user_id' not in session:
+        return redirect(url_for('main.login'))
+    
+    doctorid = request.args.get('doctor_id')
+    
+    patient = Patient.query.filter_by(user_id=session['user_id']).first()  # Fetch all doctors from the database
+
+    form = SetAppointmentDTForm()
+    if form.validate_on_submit():
+        appointment = Appointment(patient_id=patient.id, doctor_id=doctorid, date=form.date.data, time=form.time.data, description=form.description.data)
+        db.session.add(appointment)
+        db.session.commit()
+        return redirect(url_for('main.appointments'))
+    return render_template('set-date-time.html', form=form)

@@ -1,0 +1,25 @@
+{% extends "patient-dashboard.html" %}
+
+{% block view %}
+  <h1 class="mb">Add Doctor</h1>
+  <div class="add-doctor">
+    {% if doctors %}
+      <div class="doctor-list">
+        {% for doctor in doctors %}
+          <div class="doctor-item">
+            <div class="image-container">
+              <img src="{{ url_for('static', filename='images/doctor.svg') }}" alt="doctor">
+            </div>
+            <div class="sublist">
+              <p class="doctor-item-para">{{doctor.name}}</p>
+              <a href="{{url_for('main.appoint')}}?doctor_id={{doctor.id}}" class="appoint-btn">appoint</a>  
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+        
+    {% else %}
+      <p class="empty">No Doctors</p>
+    {% endif %}
+  </div>
+{% endblock %}
